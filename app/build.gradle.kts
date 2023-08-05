@@ -58,7 +58,7 @@ dependencies {
     //LIVEDATA
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.livedataVersion}")
 
-    //EXTENSION FOR SCOPES IN ACTIVITIES & FRAGMENTS
+    //EXTENSION FOR LIFE CYCLE SCOPES IN ACTIVITIES & FRAGMENTS
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecyleRuntimeVersion}")
 
     //EXTENSION KTX FOR VIEW MODELS IN ACTIVITIES AND FRAGMENTS
@@ -84,6 +84,14 @@ dependencies {
 
     //LOTTIE
     implementation("com.airbnb.android:lottie:${Versions.lottieVersion}")
+
+    //RETROFIT
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //INTERCEPTOR
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
 
     //FIREBASE
     implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
