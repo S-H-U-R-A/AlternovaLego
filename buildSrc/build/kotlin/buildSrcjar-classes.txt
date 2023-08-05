@@ -1,0 +1,1 @@
+/Users/sergio.rodriguez/AndroidStudioProjects/Alternova/buildSrc/build/classes/kotlin/main/Versions.class

@@ -1,0 +1,15 @@
+object Versions {
+    const val splashScreen = "1.0.1"
+    const val hiltVersion = "2.44"
+    const val hiltNavigationVersion = "1.0.0"
+    const val navVersion = "2.6.0"
+    const val coroutineVersion = "1.6.4"
+    const val lifecyleRuntimeVersion = "2.6.1"
+    const val viewmodelVersion = "2.6.1"
+    const val viewmodelActivityVersion = "1.7.2"
+    const val viewmodelFragmentVersion = "1.6.1"
+    const val livedataVersion = "2.6.1"
+    const val roomVersion = "2.5.2"
+    const val glideVersion = "4.15.1"
+    const val lottieVersion = "6.0.1"
+}
