@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.Alternova" parent="Base.Theme.Alternova" />
+
+    <!-- SPLASH SCREEN -->
+    <style name="Theme.Alternova.starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_screen</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Alternova</item>
+    </style>
+
 </resources>
