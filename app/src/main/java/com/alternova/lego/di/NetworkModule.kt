@@ -1,6 +1,9 @@
 package com.alternova.lego.di
 
 import com.alternova.lego.data.remote.retrofit.LegoApiServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +17,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
     @Singleton
     @Provides
     fun provideInterceptor() : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -36,5 +40,14 @@ object NetworkModule {
         .client(client)
         .build()
         .create(LegoApiServices::class.java)
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth() : FirebaseAuth {
+        val firebaseInstance: FirebaseAuth by lazy {
+            Firebase.auth
+        }
+        return firebaseInstance
+    }
 
 }
