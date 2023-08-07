@@ -25,7 +25,6 @@ class LoginNetworkDataSourceImpl @Inject constructor (
         return null
     }
 
-
     //SIGN UP USER
     override suspend fun signUpUser(email: String, password: String) : FirebaseUser? {
         val user: Task<AuthResult> = firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -38,6 +37,8 @@ class LoginNetworkDataSourceImpl @Inject constructor (
         }
         return null
     }
+
+    override suspend fun getCurrentUserId(): String? = firebaseAuth.currentUser?.uid
 
     override suspend fun isCurrentSession(): Boolean = firebaseAuth.currentUser != null
 

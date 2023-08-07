@@ -2,7 +2,7 @@ package com.alternova.lego.domain.model
 
 import com.alternova.lego.data.remote.retrofit.model.ResponseLego
 
-data class ListProductsDomain(
+data class ResponseLegoDomain(
     var products: List<ProductDomain>
 ){
     fun toResponseServices() : ResponseLego {

@@ -1,6 +1,6 @@
 package com.alternova.lego.domain.useCases.login
 
-import com.alternova.lego.data.repository.login.LoginRepository
+import com.alternova.lego.domain.repository.login.LoginRepository
 import javax.inject.Inject
 
 class GetCurrentSessionUseCase @Inject constructor(

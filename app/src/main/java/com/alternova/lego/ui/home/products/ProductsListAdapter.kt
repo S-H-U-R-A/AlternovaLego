@@ -10,7 +10,7 @@ import com.alternova.lego.databinding.ItemListProductBinding
 import com.alternova.lego.domain.model.ProductDomain
 import com.bumptech.glide.Glide
 
-class ProductsListAdapter() : ListAdapter<ProductDomain, ProductsListAdapter.ProductsListViewHolder >(DiffCallback){
+class ProductsListAdapter( private val goDetail:(id: Int) -> Unit, private val addToCar: (ProductDomain) -> Unit )  : ListAdapter<ProductDomain, ProductsListAdapter.ProductsListViewHolder >(DiffCallback){
 
     inner class ProductsListViewHolder(
         private val binding: ItemListProductBinding,
@@ -21,10 +21,18 @@ class ProductsListAdapter() : ListAdapter<ProductDomain, ProductsListAdapter.Pro
             binding.mtvTitle.text = productDomain.name
             Glide.with(context)
                 .load( productDomain.image )
-                .centerCrop()
                 .into( binding.ivProduct )
-            binding.mtvUnitPrice.text = productDomain.unitPrice.toString()
+            binding.mtvUnitPrice.text = "$ ${productDomain.unitPrice.toString()} "
             binding.mtvStock.text = productDomain.stock.toString()
+
+            binding.btnViewDetail.setOnClickListener {
+                goDetail(productDomain.id)
+            }
+
+            binding.btnAddCar.setOnClickListener {
+                addToCar(productDomain)
+            }
+
         }
 
     }

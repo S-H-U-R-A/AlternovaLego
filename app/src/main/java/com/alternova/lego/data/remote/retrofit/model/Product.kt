@@ -6,17 +6,16 @@ import com.google.gson.annotations.SerializedName
 data class Product(
     @SerializedName("id")           val id: Int,
     @SerializedName("name")         val name: String,
-    @SerializedName("unit_price")   val unitPrice: Int,
+    @SerializedName("unit_price")   val unit_price: Int,
     @SerializedName("stock")        val stock: Int,
     @SerializedName("image")        val image: String
 ){
-
     fun toDomain() : ProductDomain = ProductDomain(
         this.id,
         this.name,
-        this.unitPrice,
+        this.unit_price,
         this.stock,
-        this.image
+        this.image,
+        null
     )
-
 }

@@ -1,14 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:importantForAccessibility="no"
     tools:context=".ui.home.detailProduct.DetailProductFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:visibility="gone"
+        android:layout_marginBottom="80dp"
+        android:padding="16dp">
 
-</FrameLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Llavero de Nueva York"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="0dp"
+            android:layout_height="181dp"
+            android:layout_marginVertical="16dp"
+            android:src="@drawable/ic_logo_lego"
+            android:scaleType="centerInside"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="@id/mtv_title"
+            app:layout_constraintStart_toStartOf="@id/mtv_title"
+            app:layout_constraintTop_toBottomOf="@id/mtv_title"
+            app:layout_constraintBottom_toTopOf="@id/mtv_unit_price_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_unit_price_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Precio unitario:"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            app:layout_constraintEnd_toStartOf="@id/mtv_stock_title"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@id/mtv_title"
+            app:layout_constraintTop_toBottomOf="@id/iv_product" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_stock_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Stock: "
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            app:layout_constraintBaseline_toBaselineOf="@id/mtv_unit_price_title"
+            app:layout_constraintEnd_toEndOf="@id/mtv_title"
+            app:layout_constraintStart_toEndOf="@id/mtv_unit_price_title"
+            app:layout_constraintTop_toTopOf="@id/mtv_unit_price_title" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_unit_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:text="$ 250"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintEnd_toEndOf="@id/mtv_unit_price_title"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@id/mtv_unit_price_title"
+            app:layout_constraintTop_toBottomOf="@id/mtv_unit_price_title" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_stock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintEnd_toEndOf="@id/mtv_stock_title"
+            app:layout_constraintStart_toStartOf="@id/mtv_stock_title"
+            app:layout_constraintTop_toTopOf="@id/mtv_unit_price" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_description_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Descripción:"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            app:layout_constraintStart_toStartOf="@id/mtv_unit_price"
+            app:layout_constraintTop_toBottomOf="@id/mtv_unit_price"
+            app:layout_constraintEnd_toEndOf="@id/mtv_stock"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bla bla bla"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            app:layout_constraintStart_toStartOf="@id/mtv_description_title"
+            app:layout_constraintTop_toBottomOf="@id/mtv_description_title"
+            app:layout_constraintEnd_toEndOf="@id/mtv_description_title"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_car"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="96dp"
+            android:layout_marginTop="48dp"
+            android:text="Agregar al carrito"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:icon="@drawable/ic_add_car"
+            app:layout_constraintEnd_toEndOf="@id/mtv_description"
+            app:layout_constraintStart_toStartOf="@id/mtv_description"
+            app:layout_constraintTop_toBottomOf="@id/mtv_description" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+

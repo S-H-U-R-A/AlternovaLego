@@ -26,7 +26,7 @@ data class ShoppingCarEntity(
     @ColumnInfo(name = "unit_price") val unitPrice: Int,
     @ColumnInfo(name = "stock") val stock: Int,
     @ColumnInfo(name = "image") val image: String,
-    @ColumnInfo(name = "id_user") val idUser: Int
+    @ColumnInfo(name = "id_user") val idUser: String
 ){
     companion object{
         const val TABLE_NAME = "shopping_car_table"

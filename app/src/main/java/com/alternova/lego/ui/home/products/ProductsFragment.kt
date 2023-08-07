@@ -1,6 +1,7 @@
 package com.alternova.lego.ui.home.products
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.alternova.lego.R
 import com.alternova.lego.databinding.FragmentProductsBinding
@@ -46,7 +48,15 @@ class ProductsFragment : Fragment() {
         viewModel.getAllProducts()
 
         //SET ADAPTER
-        productAdapter = ProductsListAdapter()
+        productAdapter = ProductsListAdapter(
+            { idProduct ->
+                val action: NavDirections = ProductsFragmentDirections.actionProductsFragmentToDetailProductFragment(idProduct)
+                findNavController().navigate(action)
+            },
+            {
+                // TODO: Mandar ha hacer guardado en Room 
+            }
+        )
         binding.rvProducts.adapter = productAdapter
 
     }
@@ -63,6 +73,7 @@ class ProductsFragment : Fragment() {
     }
 
     private fun handleProductList(productsList: List<ProductDomain>) {
+        Log.d("LISTA_PRODUCTOS", productsList.toString())
         productAdapter.submitList(productsList)
     }
 

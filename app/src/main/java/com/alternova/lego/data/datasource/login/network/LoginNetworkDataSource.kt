@@ -9,6 +9,8 @@ interface LoginNetworkDataSource{
 
     suspend fun signUpUser(email: String, password: String) : FirebaseUser?
 
+    suspend fun getCurrentUserId() : String?
+
     suspend fun isCurrentSession() : Boolean
 
     suspend fun signOut() : Unit

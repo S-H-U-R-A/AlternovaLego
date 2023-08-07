@@ -1,9 +1,8 @@
-package com.alternova.lego.domain.repository.login
+package com.alternova.lego.data.repository.login
 
 import com.alternova.lego.data.datasource.login.database.LoginDataBaseDataSource
 import com.alternova.lego.data.datasource.login.network.LoginNetworkDataSource
-import com.alternova.lego.data.local.database.entity.UserEntity
-import com.alternova.lego.data.repository.login.LoginRepository
+import com.alternova.lego.domain.repository.login.LoginRepository
 import com.alternova.lego.di.qualifiers.IoDispatcher
 import com.alternova.lego.domain.model.UserDomain
 import com.google.firebase.auth.FirebaseUser
@@ -34,6 +33,10 @@ class LoginRepositoryImpl @Inject constructor (
 
     override suspend fun insertUser(user: UserDomain) = withContext(coroutineDispatcher){
         loginDataBaseDataSource.insertUser(user.toEntity())
+    }
+
+    override suspend fun getCurrentUserId(): String? = withContext(coroutineDispatcher){
+        loginNetworkDataSource.getCurrentUserId()
     }
 
     override fun getUserById(idUser: String): Flow<UserDomain> {
