@@ -19,7 +19,16 @@
         android:id="@+id/detailProductFragment"
         android:name="com.alternova.lego.ui.home.detailProduct.DetailProductFragment"
         android:label="fragment_detail_product"
-        tools:layout="@layout/fragment_detail_product" />
+        tools:layout="@layout/fragment_detail_product" >
+        <argument
+            android:name="idProduct"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailProductFragment_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/shoppingCarFragment"
@@ -27,29 +36,15 @@
         android:label="fragment_shopping_car"
         tools:layout="@layout/fragment_shopping_car" />
 
-
-
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.alternova.lego.ui.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_signInFragment2"
-            app:destination="@id/signInFragment" />
-    </fragment>
-
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.alternova.lego.ui.login.signIn.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/signUpFragment"

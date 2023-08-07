@@ -1,60 +1,90 @@
 package com.alternova.lego.ui.home.detailProduct
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alternova.lego.R
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.alternova.lego.databinding.FragmentDetailProductBinding
+import com.alternova.lego.domain.model.ProductDomain
+import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailProductFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class DetailProductFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentDetailProductBinding? = null
+    private val binding: FragmentDetailProductBinding get() = _binding!!
+
+    private val args by navArgs<DetailProductFragmentArgs>()
+
+    private val viewModel: DetailProductViewModel by viewModels()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+        _binding = FragmentDetailProductBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initComponents()
+        initObservers()
+
+    }
+
+    private fun initComponents() {
+        viewModel.getAllProducts(args.idProduct)
+    }
+
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.uiState.collect{ uiState ->
+                    handleDataProduct( uiState.product )
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_product, container, false)
+    private fun handleDataProduct(product: ProductDomain?) {
+        product?.let {
+            with(binding){
+                mtvTitle.text = it.name
+                Glide.with(requireContext())
+                    .load( it.image )
+                    .into( binding.ivProduct )
+                mtvUnitPrice.text = "$ ${ it.unitPrice } "
+                mtvStock.text = it.stock.toString()
+                mtvDescription.text = it.description
+
+                binding.clContent.isVisible = true
+
+                binding.btnAddCar.setOnClickListener {
+                    viewModel.addProductToCar(product){
+                        Toast.makeText(requireContext(), "Se ha añadido el producto con éxito", Toast.LENGTH_LONG).show()
+                        val action: NavDirections = DetailProductFragmentDirections.actionDetailProductFragmentToProductsFragment()
+                        findNavController().navigate(action)
+                    }
+                }
+
+            }
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailProductFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailProductFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
+
 }

@@ -2,9 +2,12 @@ package com.alternova.lego
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -44,14 +47,26 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         //SET TOOLBAR/ACTIONBAR OF NAVIGATION WITH NAV-CONTROLLER
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.productsFragment,
-                R.id.shoppingCarFragment
-            )
+            setOf( R.id.productsFragment, R.id.shoppingCarFragment )
         )
         setupActionBarWithNavController( navController, appBarConfiguration)
         //SETUP BOTTOM NAVIGATION WITH NAVCONTROLLER
         bottomNavigationView.setupWithNavController(navController)
+        //LISTENER HIDE BOTTOM NAVIGATION
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            when(destination.id){
+                 R.id.signInFragment, R.id.signUpFragment -> {
+                    binding.bottomNavigation.isVisible = false
+                    supportActionBar?.show()
+                    if(destination.id == R.id.signInFragment){ supportActionBar?.hide() }
+                }
+                else -> {
+                    binding.bottomNavigation.isVisible = true
+                    supportActionBar?.show()
+                }
+            }
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

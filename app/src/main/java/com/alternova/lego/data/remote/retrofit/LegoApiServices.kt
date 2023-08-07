@@ -3,9 +3,9 @@ package com.alternova.lego.data.remote.retrofit
 import com.alternova.lego.data.remote.retrofit.model.ResponseBuyProducts
 import com.alternova.lego.data.remote.retrofit.model.ResponseDetailLego
 import com.alternova.lego.data.remote.retrofit.model.ResponseLego
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface LegoApiServices {
 
@@ -14,7 +14,7 @@ interface LegoApiServices {
 
     @GET("detail")
     suspend fun getProductById(
-        @Body id: String
+        @Query("id") id: Int
     ) : ResponseDetailLego
 
     @POST("buy")

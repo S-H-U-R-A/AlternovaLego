@@ -1,60 +1,92 @@
 package com.alternova.lego.ui.home.products
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.alternova.lego.R
+import com.alternova.lego.databinding.FragmentProductsBinding
+import com.alternova.lego.domain.model.ProductDomain
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class ProductsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentProductsBinding? = null
+    private val binding: FragmentProductsBinding get() = _binding!!
+
+    private val viewModel: ProductsViewModel by viewModels()
+
+    //ADAPTER
+    private lateinit var productAdapter: ProductsListAdapter
+
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentProductsBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initComponents()
+        initObservers()
+
+    }
+
+    private fun initComponents() {
+        //VALIDATE SESSION ACTIVE
+        viewModel.getCurrentSession()
+        viewModel.getAllProducts()
+
+        //SET ADAPTER
+        productAdapter = ProductsListAdapter(
+            { idProduct ->
+                val action: NavDirections = ProductsFragmentDirections.actionProductsFragmentToDetailProductFragment(idProduct)
+                findNavController().navigate(action)
+            },
+            {
+                // TODO: Mandar ha hacer guardado en Room 
+            }
+        )
+        binding.rvProducts.adapter = productAdapter
+
+    }
+
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.uiState.collect{ uiState ->
+                    handleSessionNavigation( uiState.isCurrentSessionActive )
+                    handleProductList( uiState.productsList )
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false)
+    private fun handleProductList(productsList: List<ProductDomain>) {
+        Log.d("LISTA_PRODUCTOS", productsList.toString())
+        productAdapter.submitList(productsList)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun handleSessionNavigation(currentSessionActive: Boolean) {
+        if(!currentSessionActive){
+            findNavController().navigate(R.id.signInFragment)
+        }
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }
