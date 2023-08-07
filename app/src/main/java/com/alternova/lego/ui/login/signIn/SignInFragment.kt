@@ -2,24 +2,23 @@ package com.alternova.lego.ui.login.signIn
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.alternova.lego.R
 import com.alternova.lego.core.enums.UserMessages
 import com.alternova.lego.core.ext.convertToSpannableStringWithClick
 import com.alternova.lego.databinding.FragmentSignInBinding
-import com.alternova.lego.ui.login.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -56,7 +55,12 @@ class SignInFragment : Fragment() {
                 viewModel.signInUser(
                     binding.tietEmail.text.toString(),
                     binding.tietPassword.text.toString()
-                )
+                ){
+                    val navOptions = NavOptions.Builder().setPopUpTo(
+                        R.id.productsFragment, true
+                    ).build()
+                    findNavController().navigate(R.id.productsFragment, null, navOptions)
+                }
             }
         }
 

@@ -55,10 +55,10 @@ class MainActivity : AppCompatActivity() {
         //LISTENER HIDE BOTTOM NAVIGATION
         navController.addOnDestinationChangedListener{ _, destination, _ ->
             when(destination.id){
-                R.id.loginFragment, R.id.signInFragment, R.id.signUpFragment -> {
+                 R.id.signInFragment, R.id.signUpFragment -> {
                     binding.bottomNavigation.isVisible = false
                     supportActionBar?.show()
-                    if(destination.id == R.id.loginFragment){ supportActionBar?.hide() }
+                    if(destination.id == R.id.signInFragment){ supportActionBar?.hide() }
                 }
                 else -> {
                     binding.bottomNavigation.isVisible = true

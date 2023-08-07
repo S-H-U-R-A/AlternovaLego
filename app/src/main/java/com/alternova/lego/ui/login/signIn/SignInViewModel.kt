@@ -23,12 +23,11 @@ class SignInViewModel @Inject constructor(
     private var _uiState: MutableStateFlow<SignInUiState> = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> get() = _uiState.asStateFlow()
 
-    fun signInUser(email: String, passWord: String){
+    fun signInUser(email: String, passWord: String, action: () -> Unit){
         viewModelScope.launch {
             val user: FirebaseUser? = signInUserUseCase(email, passWord)
             if(user!=null){
-                // TODO: HACER REGISTRO EN ROOM
-                Log.d("SUCCESS_VIEW_MODEL", user.toString())
+                action()
             }else{
                 sendMessageUser(UserMessages.USER_NOT_VALID_LOGIN.code, "Usuario o contraseña incorrecta" )
             }

@@ -18,6 +18,6 @@ interface UserDao {
         SELECT * FROM ${UserEntity.TABLE_NAME} WHERE id = :idUser
         """
     )
-    fun getUserById(idUser: Int): Flow<UserEntity>
+    fun getUserById(idUser: String): Flow<UserEntity>
 
 }

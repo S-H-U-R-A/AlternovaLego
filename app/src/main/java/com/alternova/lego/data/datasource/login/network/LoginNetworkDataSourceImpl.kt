@@ -1,4 +1,4 @@
-package com.alternova.lego.data.datasource.login
+package com.alternova.lego.data.datasource.login.network
 
 import android.util.Log
 import com.google.android.gms.tasks.Task
@@ -8,9 +8,9 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class LoginDataSourceImpl @Inject constructor (
+class LoginNetworkDataSourceImpl @Inject constructor (
     private val firebaseAuth: FirebaseAuth
-) : LoginDataSource {
+) : LoginNetworkDataSource {
 
     //SIGN IN USER
     override suspend fun signInUser(email: String, password: String) : FirebaseUser? {
@@ -39,8 +39,9 @@ class LoginDataSourceImpl @Inject constructor (
         return null
     }
 
-    override suspend fun signOut() {
-        firebaseAuth.signOut()
-    }
+    override suspend fun isCurrentSession(): Boolean = firebaseAuth.currentUser != null
+
+    override suspend fun signOut() = firebaseAuth.signOut()
+
 
 }

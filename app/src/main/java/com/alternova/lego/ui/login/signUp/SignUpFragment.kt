@@ -1,7 +1,6 @@
 package com.alternova.lego.ui.login.signUp
 
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.alternova.lego.R
 import com.alternova.lego.core.enums.UserMessages
-import com.alternova.lego.core.ext.convertToSpannableStringWithClick
 import com.alternova.lego.databinding.FragmentSignUpBinding
-import com.alternova.lego.ui.login.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -54,11 +51,14 @@ class SignUpFragment : Fragment() {
                 viewModel.signUpUser(
                     binding.tietEmail.text.toString(),
                     binding.tietPassword.text.toString()
-                )
+                ){
+                    val navOptions = NavOptions.Builder().setPopUpTo(
+                        R.id.productsFragment, true
+                    ).build()
+                    findNavController().navigate(R.id.productsFragment, null, navOptions)
+                }
             }
         }
-
-        setSpannableClickTextSignUp()
 
     }
 
@@ -93,16 +93,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun setSpannableClickTextSignUp(){
-        //GET TEXT FROM RESOURCES
-        val text: String = getString(R.string.sign_in_text_button)
-        //SET TEXT SPAN CLICKABLE
-        binding.signIn.text = text.convertToSpannableStringWithClick{
-            val action: NavDirections = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()
-            findNavController().navigate(action)
-        }
-        binding.signIn.movementMethod = LinkMovementMethod.getInstance()
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()

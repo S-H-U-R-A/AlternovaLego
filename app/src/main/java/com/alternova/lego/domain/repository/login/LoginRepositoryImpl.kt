@@ -1,23 +1,44 @@
 package com.alternova.lego.domain.repository.login
 
-import com.alternova.lego.data.datasource.login.LoginDataSource
+import com.alternova.lego.data.datasource.login.database.LoginDataBaseDataSource
+import com.alternova.lego.data.datasource.login.network.LoginNetworkDataSource
+import com.alternova.lego.data.local.database.entity.UserEntity
 import com.alternova.lego.data.repository.login.LoginRepository
 import com.alternova.lego.di.qualifiers.IoDispatcher
+import com.alternova.lego.domain.model.UserDomain
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor (
-    private val loginDataSource: LoginDataSource,
+    private val loginNetworkDataSource: LoginNetworkDataSource,
+    private val loginDataBaseDataSource: LoginDataBaseDataSource,
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher
 ) : LoginRepository {
+
     override suspend fun signInUser(user: String, password: String): FirebaseUser? = withContext(coroutineDispatcher){
-        loginDataSource.signInUser(user, password)
+        loginNetworkDataSource.signInUser(user, password)
     }
 
     override suspend fun signUpUser(user: String, password: String): FirebaseUser? = withContext( coroutineDispatcher){
-        loginDataSource.signUpUser(user, password)
+        loginNetworkDataSource.signUpUser(user, password)
     }
 
+    //COMPROBACIONES DE USUARIO  DEBEN BLOQUEAR EL MAIN
+    override suspend fun isCurrentSession(): Boolean = loginNetworkDataSource.isCurrentSession()
+
+
+
+    override suspend fun insertUser(user: UserDomain) = withContext(coroutineDispatcher){
+        loginDataBaseDataSource.insertUser(user.toEntity())
+    }
+
+    override fun getUserById(idUser: String): Flow<UserDomain> {
+        return loginDataBaseDataSource.getUserById(idUser).map { userEntity ->
+            userEntity.toDomain()
+        }
+    }
 }
