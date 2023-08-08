@@ -4,4 +4,13 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <!-- SPLASH SCREEN -->
+    <style name="Theme.Alternova.starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#3E2A2A</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Alternova</item>
+    </style>
+
 </resources>

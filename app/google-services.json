@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "323459850345",
+    "project_id": "alternova-e9772",
+    "storage_bucket": "alternova-e9772.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323459850345:android:f4e38f7eca3c05fbabc2f8",
+        "android_client_info": {
+          "package_name": "com.alternova.lego"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323459850345-m5pl9k7au35cu0n003jbnuqb722cai55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alternova.lego",
+            "certificate_hash": "caa6c3db8d59224b9405a3b4585ca474eddb187c"
+          }
+        },
+        {
+          "client_id": "323459850345-341mntc2k8l86tshgt1vbppk8er458mk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu0qgXrHwkJmGklUbLGa2flbpniLyqxf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323459850345-341mntc2k8l86tshgt1vbppk8er458mk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
